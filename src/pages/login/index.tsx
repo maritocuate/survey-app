@@ -17,7 +17,6 @@ const Login: NextPage = () => {
   const [haveMetamask, setHavemetamask] = useState(false)
   const [buttonText, setButtonText] = useState('Connect')
   const [buttonLink, setButtonLink] = useState<IButton>({type:'', target:''})
-  const [account, setAccount] = useState(null)
 
   const ropstenChainId:string = '3'
   const router = useRouter()
@@ -25,7 +24,6 @@ const Login: NextPage = () => {
 
   useEffect(() => {
 
-    setAccount(userAccount)
     if (typeof window.ethereum !== 'undefined') {
       setHavemetamask(true)
 
