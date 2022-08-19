@@ -5,6 +5,15 @@ const nextConfig = {
   sassOptions: {
     includePaths: ['./src'],
     prependData: `@import "styles/_variables.scss";`
+  },
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/login',
+        permanent: true,
+      },
+    ]
   }
 }
 
