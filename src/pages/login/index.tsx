@@ -1,7 +1,9 @@
 import type { NextPage } from 'next'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Button } from 'antd';
 import styles from './styles.module.scss'
+import { useAuth } from '../../context/SurveyContext'
+import { useRouter } from 'next/router'
 
 declare global {
   interface Window { ethereum: any }
@@ -18,12 +20,16 @@ const Login: NextPage = () => {
   const [account, setAccount] = useState(null)
 
   const ropstenChainId:string = '3'
+  const router = useRouter()
+  const { userAccount, saveAccount } = useAuth()
 
   useEffect(() => {
+
+    setAccount(userAccount)
     if (typeof window.ethereum !== 'undefined') {
       setHavemetamask(true)
 
-      if(!account) {
+      if(!userAccount) {
         setButtonText('Connect with Metamask')
         setButtonLink({
           type: 'request', 
@@ -38,16 +44,17 @@ const Login: NextPage = () => {
         })
 
       }else {
-        window.open('/survey', '_self')
+        router.push('/survey')
       }
     }
-  }, [account])
+  }, [userAccount])
 
   const handleClick = (type:string, target?:string) => {
+    
     if(type==='request') {
       window.ethereum.request({method: target})
       .then(res => {
-        setAccount(res[0])
+        saveAccount(res[0])
       })
 
     }else if(type==='switch') {
@@ -56,7 +63,7 @@ const Login: NextPage = () => {
         params: [{ chainId: '0x'+ropstenChainId.toString(16) }]
       })
       .then(() => {
-        window.open('/survey', '_self')
+        router.push('/survey')
       })
     }
   }
