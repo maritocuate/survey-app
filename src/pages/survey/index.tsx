@@ -7,13 +7,12 @@ import Header from '../../components/Header'
 import Dashboard from '../../components/Dashboard'
 import { useSurvey } from '../../context/SurveyContext'
 
-const Survey: NextPage = () => {  
-
+const Survey: NextPage = () => {
   const { userAccount } = useSurvey()
   const router = useRouter()
 
-  useEffect(() => { 
-    !userAccount ? router.push('/login') : null
+  useEffect(() => {
+    if (!userAccount) router.push('/login')
   }, [userAccount])
 
   return (

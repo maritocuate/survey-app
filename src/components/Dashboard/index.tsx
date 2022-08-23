@@ -9,21 +9,21 @@ const { Text } = Typography
 
 const Dashboard: NextPage = () => {
   const [data, setData] = useState(null)
-  const [survey, setSurvey] = useState(false)
+  const [survey, setSurvey] = useState<boolean>(false)
 
   const { balance } = useSurvey()
 
   useEffect(() => {
     fetch('/api/survey')
-    .then(res => res.json())
-    .then(res => setData(res))
+      .then(res => res.json())
+      .then(res => setData(res))
   }, [])
-
 
   return (
     <div className={styles.dashboard}>
       {
-        !survey ? (
+        !survey
+          ? (
           <div className={styles.dashboard__start}>
             <Button
               type='dashed'
@@ -31,9 +31,10 @@ const Dashboard: NextPage = () => {
             >Start Survey</Button>
             <Text type='success'>Balance: { balance }</Text>
           </div>
-        ) : (
+            )
+          : (
           <SurveyApp data={ data } />
-        )
+            )
       }
     </div>
   )

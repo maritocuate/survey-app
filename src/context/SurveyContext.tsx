@@ -1,4 +1,4 @@
-import { createContext, useContext, ReactNode, useState } from "react"
+import { createContext, useContext, ReactNode, useState } from 'react'
 
 type IContextType = {
     userAccount: string
@@ -8,45 +8,45 @@ type IContextType = {
 };
 
 const surveyContextDefaultValues: IContextType = {
-    userAccount: '',
-    saveAccount: () => {},
-    balance: '',
-    saveBalance: () => {}
-};
+  userAccount: '',
+  saveAccount: () => {},
+  balance: '',
+  saveBalance: () => {}
+}
 
 const SurveyContext = createContext<IContextType>(surveyContextDefaultValues)
 
-export function useSurvey() {
-    return useContext(SurveyContext)
+export function useSurvey () {
+  return useContext(SurveyContext)
 }
 
 type Props = {
     children: ReactNode
 }
 
-export function SurveyProvider({ children }: Props) {
-    const [userAccount, setUserAccount] = useState<string>('')
-    const [balance, setBalance] = useState<string>('')
+export function SurveyProvider ({ children }: Props) {
+  const [userAccount, setUserAccount] = useState<string>('')
+  const [balance, setBalance] = useState<string>('')
 
-    const saveAccount = (id:string) => {
-        setUserAccount(id)
-    }
-    const saveBalance = (amount:string) => {
-        setBalance(amount)
-    }
+  const saveAccount = (id:string) => {
+    setUserAccount(id)
+  }
+  const saveBalance = (amount:string) => {
+    setBalance(amount)
+  }
 
-    const value = {
-        userAccount,
-        saveAccount,
-        balance,
-        saveBalance
-    }
+  const value = {
+    userAccount,
+    saveAccount,
+    balance,
+    saveBalance
+  }
 
-    return (
+  return (
         <>
             <SurveyContext.Provider value={value}>
                 {children}
             </SurveyContext.Provider>
         </>
-    );
+  )
 }
