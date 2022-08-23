@@ -4,7 +4,11 @@ import { Button, Card } from 'antd'
 import * as Survey from 'survey-react'
 import 'survey-react/survey.css'
 
-const SurveyApp: NextPage = ({ data }:{data:any}) => {
+interface Props {
+    data: any
+}
+
+const SurveyApp: NextPage<Props> = ({ data }:{data:object}) => {
   const [results, setResults] = useState(null)
 
   const model = new Survey.Model(data)

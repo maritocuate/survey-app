@@ -50,13 +50,13 @@ const Login: NextPage = () => {
   const handleClick = (type:string, target?:string) => {
     if (type === 'request') {
       window.ethereum.request({ method: target })
-        .then(res => {
+        .then((res: string[]) => {
           saveAccount(res[0])
         })
     } else if (type === 'switch') {
       window.ethereum.request({
         method: target,
-        params: [{ chainId: '0x' + ropstenChainId.toString(16) }]
+        params: [{ chainId: '0x' + ropstenChainId.toString() }]
       })
         .then(() => {
           getBalance(userAccount)

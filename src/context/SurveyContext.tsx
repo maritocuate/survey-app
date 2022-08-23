@@ -2,9 +2,9 @@ import { createContext, useContext, ReactNode, useState } from 'react'
 
 type IContextType = {
     userAccount: string
-    saveAccount: () => void
+    saveAccount: (id:string) => void
     balance: string
-    saveBalance: () => void
+    saveBalance: (amount:string) => void
 };
 
 const surveyContextDefaultValues: IContextType = {
@@ -35,7 +35,7 @@ export function SurveyProvider ({ children }: Props) {
     setBalance(amount)
   }
 
-  const value = {
+  const contextValue:any = {
     userAccount,
     saveAccount,
     balance,
@@ -44,7 +44,7 @@ export function SurveyProvider ({ children }: Props) {
 
   return (
         <>
-            <SurveyContext.Provider value={value}>
+            <SurveyContext.Provider value={contextValue}>
                 {children}
             </SurveyContext.Provider>
         </>

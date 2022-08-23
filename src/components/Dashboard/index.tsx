@@ -8,7 +8,7 @@ import SurveyApp from '../SurveyApp'
 const { Text } = Typography
 
 const Dashboard: NextPage = () => {
-  const [data, setData] = useState(null)
+  const [data, setData] = useState<object>({})
   const [survey, setSurvey] = useState<boolean>(false)
 
   const { balance } = useSurvey()
