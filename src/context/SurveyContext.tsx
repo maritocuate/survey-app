@@ -3,16 +3,20 @@ import { createContext, useContext, ReactNode, useState } from "react"
 type IContextType = {
     userAccount: string
     saveAccount: () => void
+    balance: string
+    saveBalance: () => void
 };
 
 const surveyContextDefaultValues: IContextType = {
     userAccount: '',
-    saveAccount: () => {}
+    saveAccount: () => {},
+    balance: '',
+    saveBalance: () => {}
 };
 
 const SurveyContext = createContext<IContextType>(surveyContextDefaultValues)
 
-export function useAuth() {
+export function useSurvey() {
     return useContext(SurveyContext)
 }
 
@@ -22,14 +26,20 @@ type Props = {
 
 export function SurveyProvider({ children }: Props) {
     const [userAccount, setUserAccount] = useState<string>('')
+    const [balance, setBalance] = useState<string>('')
 
     const saveAccount = (id:string) => {
         setUserAccount(id)
     }
+    const saveBalance = (amount:string) => {
+        setBalance(amount)
+    }
 
     const value = {
         userAccount,
-        saveAccount
+        saveAccount,
+        balance,
+        saveBalance
     }
 
     return (

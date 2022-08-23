@@ -1,9 +1,10 @@
 import type { NextPage } from 'next'
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 import { Button } from 'antd';
 import styles from './styles.module.scss'
-import { useAuth } from '../../context/SurveyContext'
-import { useRouter } from 'next/router'
+import { useSurvey } from '../../context/SurveyContext'
+import { ethers } from 'ethers'
 
 declare global {
   interface Window { ethereum: any }
@@ -20,7 +21,7 @@ const Login: NextPage = () => {
 
   const ropstenChainId:string = '3'
   const router = useRouter()
-  const { userAccount, saveAccount } = useAuth()
+  const { userAccount, saveAccount, saveBalance } = useSurvey()
 
   useEffect(() => {
 
@@ -42,13 +43,13 @@ const Login: NextPage = () => {
         })
 
       }else {
+        getBalance(userAccount)
         router.push('/survey')
       }
     }
   }, [userAccount])
 
   const handleClick = (type:string, target?:string) => {
-    
     if(type==='request') {
       window.ethereum.request({method: target})
       .then(res => {
@@ -61,9 +62,17 @@ const Login: NextPage = () => {
         params: [{ chainId: '0x'+ropstenChainId.toString(16) }]
       })
       .then(() => {
+        getBalance(userAccount)
         router.push('/survey')
       })
     }
+  }
+  
+  const getBalance = async (address:string) => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum)
+    const balance = await provider.getBalance(address)
+    const balanceInEth = ethers.utils.formatEther(balance)
+    saveBalance(balanceInEth)
   }
 
   return (

@@ -1,9 +1,9 @@
 import type { NextPage } from 'next'
 import styles from './styles.module.scss'
-import { useAuth } from '../../context/SurveyContext'
+import { useSurvey } from '../../context/SurveyContext'
 
 const Header: NextPage = () => {
-  const { userAccount } = useAuth()
+  const { userAccount } = useSurvey()
 
   return (
     <div className={styles.header}>

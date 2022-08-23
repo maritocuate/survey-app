@@ -5,11 +5,11 @@ import { Content } from 'antd/lib/layout/layout'
 import styles from './styles.module.scss'
 import Header from '../../components/Header'
 import Dashboard from '../../components/Dashboard'
-import { useAuth } from '../../context/SurveyContext'
+import { useSurvey } from '../../context/SurveyContext'
 
 const Survey: NextPage = () => {  
 
-  const { userAccount } = useAuth()
+  const { userAccount } = useSurvey()
   const router = useRouter()
 
   useEffect(() => { 
